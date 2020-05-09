@@ -78,3 +78,12 @@
 .iconlishi:before {
   content: "\e61a";
 }
+.app-nav-bar {
+  background-color: #3296fa !important;
+}
+.app-nav-bar .van-nav-bar__title {
+  color: #fff;
+}
+.app-nav-bar .van-icon {
+  color: #fff !important;
+}

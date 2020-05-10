@@ -14,7 +14,9 @@
         v-model="user.mobile"
         icon-prefix="icon"
         left-icon="shouji"
+        name="pattern"
         placeholder="请输入手机号"
+        :rules="[{ pattern, message: '请输入正确的号码格式' }]"
       />
       <van-field
         v-model="user.code"
@@ -38,7 +40,7 @@
 </template>
 <script>
 import { login } from '@/api/user'
-
+// import { Toast } from 'vant'
 export default {
   name: 'LoginIndex',
   data () {
@@ -46,7 +48,8 @@ export default {
       user: {
         mobile: '', // 手机号
         code: '' // 验证码
-      }
+      },
+      pattern: /^(((13[0-9])|(14[5-7])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9]))+\d{8})$/
     }
   },
   created () {

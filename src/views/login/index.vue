@@ -82,10 +82,9 @@ export default {
         duration: 0 // 展示时长 值为0 时toast 不消失
       })
       try {
-        const res = await login(this.user)
+        const { data } = await login(this.user)
         this.$toast.success('登录成功')
-        // 处理响应结果
-        console.log(res)
+        this.$store.commit('setUser', data.data)
       } catch (err) {
         console.log('登录失败', err)
         this.$toast.fail('登录失败,手机号或验证码不正确')

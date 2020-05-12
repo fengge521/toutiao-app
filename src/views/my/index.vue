@@ -58,13 +58,13 @@
     <van-grid class="nav-grid mb-4" :column-num="2">
       <van-grid-item
         class="nav-grid-item"
-        icon-prefix="toutiao"
+        icon-prefix="icon"
         icon="shoucang"
         text="收藏"
       />
       <van-grid-item
         class="nav-grid-item"
-        icon-prefix="toutiao"
+        icon-prefix="icon"
         icon="lishi"
         text="历史"
       />
@@ -195,13 +195,13 @@ export default {
   /deep/ .nav-grid {
     .nav-grid-item {
       height: 70px;
-      .toutiao {
+      .icon {
         font-size: 22px;
       }
-      .toutiao-shoucang {
+      .icon-shoucang {
         color: #eb5253;
       }
-      .toutiao-lishi {
+      .icon-lishi {
         color: #ff9d1d;
       }
       .van-grid-item__text {

@@ -57,7 +57,7 @@ export default {
       formRules: {
         mobile: [
           { required: true, message: '请输入手机号' },
-          { pattern: /^1{3|5|7|8|9}\d{9}$/, message: '手机号码格式错误' }
+          { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '手机号码格式错误' }
         ],
         code: [
           { required: true, message: '请输入验证码' },

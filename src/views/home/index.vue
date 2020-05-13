@@ -75,5 +75,15 @@ export default {
       font-size: 14px;
     }
   }
+  /deep/ .van-tab {
+    border-right: 1px solid #edeff3;
+    border-bottom: 1px solid #edeff3;
+  }
+  /deep/ .van-tabs__line {
+    height: 3px;
+    width: 15px !important;
+    bottom: 20px;
+    background-color: #3296fa;
+  }
 }
 </style>

@@ -10,6 +10,7 @@ import 'vant/lib/index.css'
 import 'amfe-flexible'
 // 加载全局样式
 import './styles/index.less'
+import './utils/dayjs'
 // 全局注册 vant 中的组件
 Vue.use(Vant)
 Vue.config.productionTip = false

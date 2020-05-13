@@ -98,7 +98,9 @@ export default {
   },
   watch: {},
   created () {
-    this.loadCurrentUser()
+    if (this.user) {
+      this.loadCurrentUser()
+    }
   },
   mounted () {},
   methods: {

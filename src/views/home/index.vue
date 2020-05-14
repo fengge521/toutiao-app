@@ -25,6 +25,15 @@
       </van-tab>
     </van-tabs>
     <!-- 频道列表 -->
+    <!-- 弹出层 -->
+    <van-popup
+      v-model="isChannelEditShow"
+      position="bottom"
+      class="channel-edit-popup"
+      closeable
+      close-icon-position="top-left"
+      get-container="body"
+    />
   </div>
 </template>
 
@@ -39,7 +48,8 @@ export default {
   data () {
     return {
       active: 0, // 控制被激活的标签
-      channels: [] // 频道列表
+      channels: [], // 频道列表
+      isChannelEditShow: false
     }
   },
   created () {
@@ -85,5 +95,9 @@ export default {
     bottom: 20px;
     background-color: #3296fa;
   }
+}
+// 挂在在body下直接写在全局或者写在行内
+.channel-edit-popup {
+  height: 100%;
 }
 </style>

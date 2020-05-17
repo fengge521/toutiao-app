@@ -5,7 +5,10 @@
       :title="str"
       v-for="(str, index) in suggestions"
       :key="index"
-    ></van-cell>
+      @click="$emit('search', str)"
+    >
+      <div slot="title" v-html="highLight(str)"></div>
+    </van-cell>
   </div>
 </template>
 
@@ -20,7 +23,13 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      suggestions: []
+    }
+  },
   watch: {
+    // 侦听数据改变处罚这个函数,并且用lodash处理了函数防抖
     searchText: {
       // 当数据发生变化则会执行 handler 处理函数
       handler: debounce(async function () {
@@ -33,11 +42,6 @@ export default {
       immediate: true // 该回调将会在侦听开始之后被立即调用
     }
   },
-  data () {
-    return {
-      suggestions: []
-    }
-  },
   created () {
 
   },
@@ -45,7 +49,13 @@ export default {
 
   },
   methods: {
-
+    // 让搜索框内的所有结果显示高亮
+    highLight (str) {
+      return str.replace(
+        new RegExp(this.searchText, 'gi'),
+        `<span style="color: red">${this.searchText}</span>`
+      )
+    }
   }
 }
 </script>

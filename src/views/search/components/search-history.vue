@@ -3,11 +3,16 @@
     <van-cell
       title="搜索历史"
     >
-      <div>
-        <span>全部删除</span>
+      <div v-if="isDelete">
+        <span @click="$emit('onAllDelete')">全部删除</span>
         &nbsp;&nbsp;
-        <span>完成</span>
+        <span @click="isDelete = !isDelete">完成</span>
       </div>
+      <van-icon
+        name="delete"
+        @click="isDelete = !isDelete"
+        v-else
+      />
     </van-cell>
     <van-cell
       :title="history"
@@ -30,7 +35,7 @@ export default {
   },
   data () {
     return {
-
+      isDelete: false // 判断是否处于删除状态
     }
   },
   created () {
@@ -40,7 +45,12 @@ export default {
 
   },
   methods: {
-
+    // 根据id删除搜索历史的每一项
+    // onDelete (articleId) {
+    //   deleteSearchHistory (articleId) {
+    //     console.log(articleId)
+    //   }
+    // }
   }
 }
 </script>

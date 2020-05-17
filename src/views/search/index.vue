@@ -27,6 +27,7 @@
     <search-history
       v-else
       :search-histories="searchHistories"
+      @onAllDelete="searchHistories = []"
     />
   </div>
 </template>

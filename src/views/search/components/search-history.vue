@@ -4,7 +4,7 @@
       title="搜索历史"
     >
       <div v-if="isDelete">
-        <span @click="$emit('onAllDelete')">全部删除</span>
+        <span @click="$emit('onAllDelete', [])">全部删除</span>
         &nbsp;&nbsp;
         <span @click="isDelete = !isDelete">完成</span>
       </div>
@@ -18,13 +18,18 @@
       :title="history"
       v-for="(history, index) in searchHistories"
       :key="index"
+      @click= "onDelete(history, index)"
     >
-      <van-icon name="close" />
+      <van-icon
+        name="close"
+        v-show="isDelete"
+      />
     </van-cell>
   </div>
 </template>
 
 <script>
+// import { setItem } from '@/utils/storage'
 export default {
   name: 'SearchHistory',
   props: {
@@ -35,7 +40,7 @@ export default {
   },
   data () {
     return {
-      isDelete: false // 判断是否处于删除状态
+      isDelete: false // 判断是否处于删除显示状态
     }
   },
   created () {
@@ -45,12 +50,17 @@ export default {
 
   },
   methods: {
-    // 根据id删除搜索历史的每一项
-    // onDelete (articleId) {
-    //   deleteSearchHistory (articleId) {
-    //     console.log(articleId)
-    //   }
-    // }
+    onDelete (history, index) {
+      // 删除状态
+      if (this.isDelete) {
+        this.searchHistories.splice(index, 1)
+        // 持久化处理
+        // setItem('search-histories', this.searchHistories)
+        return
+      }
+      // 非删除状态
+      this.$emit('search', history)
+    }
   }
 }
 </script>

@@ -27,7 +27,8 @@
     <search-history
       v-else
       :search-histories="searchHistories"
-      @onAllDelete="searchHistories = []"
+      @onAllDelete="searchHistories = $event"
+      @search="onSearch"
     />
   </div>
 </template>
@@ -37,7 +38,7 @@ import searchSuggest from './components/search-suggest'
 import searchHistory from './components/search-history'
 import searchResult from './components/search-result'
 import { setItem, getItem } from '@/utils/storage'
-import { getSearchHistory } from '@/api/search'
+// import { getSearchHistory } from '@/api/search'
 import { mapState } from 'vuex'
 export default {
   name: 'SearchIndex',
@@ -55,6 +56,11 @@ export default {
   },
   computed: {
     ...mapState(['user'])
+  },
+  watch: {
+    searchHistory () {
+      setItem('search-histories', this.searchHistories)
+    }
   },
   created () {
     this.loadSearchHistory()
@@ -84,17 +90,17 @@ export default {
       // 因为后端帮我们存储的用户搜索历史记录太少了（只有4条）
       // 所以我们这里让后端返回的历史记录和本地的历史记录合并到一起
       // 如果用户已登录
-      let searchHistories = getItem('search-histories') || []
-      if (this.user) {
-        const { data } = await getSearchHistory()
-        // 合并数组： [...数组, ...数组]
-        // 把 Set 转为数组：[...Set对象]
-        // 数组去重：[...new Set([...数组, ...数组])
-        searchHistories = [...new Set([
-          ...searchHistories,
-          ...data.data.keywords
-        ])]
-      }
+      const searchHistories = getItem('search-histories') || []
+      // if (this.user) {
+      //   const { data } = await getSearchHistory()
+      //   // 合并数组： [...数组, ...数组]
+      //   // 把 Set 转为数组：[...Set对象]
+      //   // 数组去重：[...new Set([...数组, ...数组])
+      //   searchHistories = [...new Set([
+      //     ...searchHistories,
+      //     ...data.data.keywords
+      //   ])]
+      // }
       this.searchHistories = searchHistories
     }
   }

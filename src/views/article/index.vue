@@ -51,6 +51,7 @@
           round
           size="small"
           class="article-btn"
+          @click="isPublishShow = true"
         >写评论</van-button>
         <van-icon
           name="comment-o"
@@ -73,6 +74,17 @@
         />
       </div>
       <!-- 底部评论区 -->
+      <!-- 发布评论 -->
+      <van-popup
+        v-model="isPublishShow"
+        position="bottom"
+      >
+        <publish-comment
+          :target="articleId"
+          @publish-success="onPublishSuccess"
+        />
+      </van-popup>
+      <!-- 发布评论 -->
   </div>
 </template>
 
@@ -88,6 +100,7 @@ import {
 import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user'
 import CommentList from './components/comment-list'
+import PublishComment from './components/publish-comment'
 export default {
   name: 'ArticleIndex',
   props: {
@@ -97,11 +110,14 @@ export default {
     }
   },
   components: {
-    CommentList
+    CommentList,
+    PublishComment
   },
   data () {
     return {
-      article: {} // 文章数据对象
+      article: {}, // 文章数据对象
+      isPublishShow: false, // 控制发布评论的显示状态
+      commentList: [] // 文章评论列表
     }
   },
   created () {
@@ -185,6 +201,12 @@ export default {
         this.article.attitude = 1
       }
       this.$toast.success(`${this.article.attitude === 1 ? '' : '取消'}点赞成功`)
+    },
+    onPublishSuccess (comment) {
+      // 把发布成功的评论数据对象放到评论列表顶部
+      this.commentList.unshift(comment)
+      // 关闭发布评论弹出层
+      this.isPublishShow = false
     }
   }
 }

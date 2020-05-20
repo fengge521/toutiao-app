@@ -41,50 +41,65 @@
         ></div>
       <!-- 文章内容 -->
       <!-- 文章评论列表 -->
-      <comment-list :source="articleId" />
+      <comment-list
+        :source="articleId"
+        :list="commentList"
+        @updata-count="totalCount = $event"
+        @reply-click="onReplyClick"
+      />
       <!-- /文章评论列表 -->
     </div>
     <!-- 底部评论区 -->
-      <div class="article-bottom">
-        <van-button
-          type="default"
-          round
-          size="small"
-          class="article-btn"
-          @click="isPublishShow = true"
-        >写评论</van-button>
-        <van-icon
-          name="comment-o"
-          badge="99+"
-          color="#777"
-        />
-        <van-icon
-          :name="article.is_collected ? 'star' : 'star-o'"
-          :color="article.is_collected ? 'orange' : '#777'"
-          @click="onCollect"
-        />
-        <van-icon
-          :name="article.attitude === 1 ? 'good-job' : 'good-job-o'"
-          :color="article.attitude === 1 ? 'orange' : '#777'"
-          @click="onLike"
-        />
-        <van-icon
-          name="share"
-          color="#777"
-        />
-      </div>
-      <!-- 底部评论区 -->
-      <!-- 发布评论 -->
-      <van-popup
-        v-model="isPublishShow"
-        position="bottom"
-      >
-        <publish-comment
-          :target="articleId"
-          @publish-success="onPublishSuccess"
-        />
-      </van-popup>
-      <!-- 发布评论 -->
+    <div class="article-bottom">
+      <van-button
+        type="default"
+        round
+        size="small"
+        class="article-btn"
+        @click="isPublishShow = true"
+      >写评论</van-button>
+      <van-icon
+        name="comment-o"
+        :badge="totalCount"
+        color="#777"
+      />
+      <van-icon
+        :name="article.is_collected ? 'star' : 'star-o'"
+        :color="article.is_collected ? 'orange' : '#777'"
+        @click="onCollect"
+      />
+      <van-icon
+        :name="article.attitude === 1 ? 'good-job' : 'good-job-o'"
+        :color="article.attitude === 1 ? 'orange' : '#777'"
+        @click="onLike"
+      />
+      <van-icon
+        name="share"
+        color="#777"
+      />
+    </div>
+    <!-- 底部评论区 -->
+    <!-- 发布评论 -->
+    <van-popup
+      v-model="isPublishShow"
+      position="bottom"
+    >
+      <publish-comment
+        :target="articleId"
+        @publish-success="onPublishSuccess"
+      />
+    </van-popup>
+    <!-- 发布评论 -->
+    <!-- 评论的回复 -->
+    <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+    >
+      <comment-reply
+
+      />
+    </van-popup>
+    <!-- 评论的回复 -->
   </div>
 </template>
 
@@ -99,8 +114,9 @@ import {
 } from '@/api/article'
 import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user'
-import CommentList from './components/comment-list'
-import PublishComment from './components/publish-comment'
+import commentList from './components/comment-list'
+import publishComment from './components/publish-comment'
+import commentReply from './components/comment-reply'
 export default {
   name: 'ArticleIndex',
   props: {
@@ -110,14 +126,17 @@ export default {
     }
   },
   components: {
-    CommentList,
-    PublishComment
+    commentList,
+    publishComment,
+    commentReply
   },
   data () {
     return {
       article: {}, // 文章数据对象
       isPublishShow: false, // 控制发布评论的显示状态
-      commentList: [] // 文章评论列表
+      commentList: [], // 文章评论列表
+      totalCount: 0, // 文章评论总数
+      isReplyShow: false // 控制评论回复的显示状态
     }
   },
   created () {
@@ -207,6 +226,13 @@ export default {
       this.commentList.unshift(comment)
       // 关闭发布评论弹出层
       this.isPublishShow = false
+      // 更新评论总数
+      this.totalCount++
+    },
+    onReplyClick (comment) {
+      console.log('onReplyClick', comment)
+      // 点击回复展示回复内容
+      this.isReplyShow = true
     }
   }
 }

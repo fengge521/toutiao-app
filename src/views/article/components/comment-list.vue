@@ -11,6 +11,7 @@
         v-for="(comment, index) in list"
         :key="index"
         :comment="comment"
+        @reply-click="$emit('reply-click', $event)"
       ></comment-item>
     </van-list>
   </div>
@@ -63,6 +64,7 @@ export default {
         limit: this.limit // 每页大小
       })
       console.log(data)
+      this.$emit('updata-count', data.data.total_count)
       // 2. 把数据放到数据列表中
       const { results } = data.data
       this.list.push(...results)

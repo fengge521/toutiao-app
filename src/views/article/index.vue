@@ -99,6 +99,7 @@
         v-if="isReplyShow"
         :comment="replyComment"
         @close="isReplyShow = false"
+        :article-id="articleId"
       />
     </van-popup>
     <!-- 评论的回复 -->

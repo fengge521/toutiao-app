@@ -96,7 +96,9 @@
       position="bottom"
     >
       <comment-reply
-
+        v-if="isReplyShow"
+        :comment="replyComment"
+        @close="isReplyShow = false"
       />
     </van-popup>
     <!-- 评论的回复 -->
@@ -136,7 +138,8 @@ export default {
       isPublishShow: false, // 控制发布评论的显示状态
       commentList: [], // 文章评论列表
       totalCount: 0, // 文章评论总数
-      isReplyShow: false // 控制评论回复的显示状态
+      isReplyShow: false, // 控制评论回复的显示状态
+      replyComment: {} // 当前回复评论项对象
     }
   },
   created () {
@@ -231,6 +234,7 @@ export default {
     },
     onReplyClick (comment) {
       console.log('onReplyClick', comment)
+      this.replyComment = comment
       // 点击回复展示回复内容
       this.isReplyShow = true
     }

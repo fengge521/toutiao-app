@@ -13,7 +13,7 @@
       <h1 class="title">{{ article.title }}</h1>
       <!-- 文章标题 -->
       <!-- 作者信息 -->
-      <van-cell center class="user-info">
+      <van-cell center class="user-info" :to="`/user/${article.aut_id}`">
         <div slot="title" class="name">{{ article.aut_name }}</div>
         <van-image
           slot="icon"
